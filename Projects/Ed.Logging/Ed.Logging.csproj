@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <UseWindowsForms>false</UseWindowsForms>
+    <UseWPF>false</UseWPF>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <OutputType>Library</OutputType>
+    <Optimize>false</Optimize>
+    <IncludeSymbols>true</IncludeSymbols>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(CODESPACES)' == 'true' or '$(GITHUB_ACTIONS)' == 'true' or '$(WEBSITE_SITE_NAME)' != '' ">
+    <!--
+"...format=%%cI...", see Ed.Common.targets, works only under Windows locally.
+Correct it to %cI on GitHub Codespaces / Actions and Azure DevOps pipelines.
+See output below in target RestoreClientSideLibraries.
+-->
+    <LatestCommitTimestampScript><![CDATA[git log -1 --format=%cI]]></LatestCommitTimestampScript>
+
+  </PropertyGroup>
+  
+  <Import Project="$(MSBuildThisFileDirectory)..\..\msbuildLib\Ed.Common.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\msbuildLib\Ed.CSharp.targets" />
+  
+  
+</Project>

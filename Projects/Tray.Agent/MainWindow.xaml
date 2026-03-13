@@ -1,0 +1,61 @@
+﻿<Window x:Class="Tray.Agent.MainWindow"
+        x:Name="MainWindowInstance"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="{Binding ElementName=MainWindowInstance, Path=WindowTitle}"
+        Icon="/resources/trayicon.ico"
+        WindowStartupLocation="CenterScreen"
+        Height="610" Width="780" Closed="MainWindow_OnClosed" Initialized="MainWindow_OnInitialized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="400" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="140*" />
+            <RowDefinition Height="28" />
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Header="Storage: TheStorage.xml" FlowDirection="LeftToRight" Margin="6">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListBox Name="InfoList" FontFamily="Consolas" Margin="4" BorderThickness="0"
+                         ItemsSource="{Binding ElementName=MainWindowInstance, Path=.StorageViewModel.InfoList, Mode=OneWay}">
+                    <ListBox.Resources>
+                        <Style TargetType="ListBoxItem">
+                            <Style.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                                                 Color="Transparent" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}"
+                                                 Color="Transparent" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                                                 Color="Black" />
+                            </Style.Resources>
+                        </Style>
+                    </ListBox.Resources>
+                </ListBox>
+            </ScrollViewer>
+        </GroupBox>
+        <GridSplitter Grid.Row="1"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center"
+                      Background="DarkGray"
+                      ShowsPreview="True"
+                      Height="5" />
+        <ListBox Grid.Row="2" Name="LogControl" Margin="6" FontFamily="Consolas"
+                 ItemsSource="{Binding ElementName=MainWindowInstance, Path=ObservableLogTarget, Mode=OneWay}" />
+        <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="LeftToRight"
+                    Margin="6,0,6,4">
+            <Label Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center">Storage Location:</Label>
+            <TextBox Name="StorageLocationBox" Width="300" IsReadOnly="True"
+                     VerticalContentAlignment="Center"
+                     Text="{Binding ElementName=MainWindowInstance, Path=.StorageViewModel.StorageLocation}" />
+            <Label Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center">Web Server URI:</Label>
+            <TextBox Name="WebServerTextBox" Width="200" IsReadOnly="True"
+                     VerticalContentAlignment="Center"
+                     Text="{Binding ElementName=MainWindowInstance, Path=.StorageViewModel.WebServerUri}" />
+            <CheckBox Name="ClientConnected" VerticalAlignment="Center" IsEnabled="False"
+                      IsChecked="{Binding ElementName=MainWindowInstance, Path=.StorageViewModel.ServerActive, Mode=TwoWay}" />
+            <Label Width="70" HorizontalContentAlignment="Left" VerticalAlignment="Center">Active</Label>
+        </StackPanel>
+    </Grid>
+</Window>

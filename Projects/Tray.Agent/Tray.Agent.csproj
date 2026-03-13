@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <OutputType>WinExe</OutputType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <ApplicationIcon>resources\trayicon.ico</ApplicationIcon>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(CODESPACES)' == 'true' or '$(GITHUB_ACTIONS)' == 'true' or '$(WEBSITE_SITE_NAME)' != '' ">
+    <!--
+"...format=%%cI...", see Ed.Common.targets, works only under Windows locally.
+Correct it to %cI on GitHub Codespaces / Actions and Azure DevOps pipelines.
+See output below in target RestoreClientSideLibraries.
+-->
+    <LatestCommitTimestampScript><![CDATA[git log -1 --format=%cI]]></LatestCommitTimestampScript>
+
+  </PropertyGroup>
+ 
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\msbuildLib\Ed.Common.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\msbuildLib\Ed.CSharp.targets" />
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\trayicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ed.Logging\Ed.Logging.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Currencies.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11605.240
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tray.Agent", "projects\Tray.Agent\Tray.Agent.csproj", "{935CE8EA-36F6-4DA3-A24A-9AA9F92D94BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{496ED9D2-AA53-410C-8FD3-938362C4FCAE}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		StartMinimizedStopTrayAgent.cmd = StartMinimizedStopTrayAgent.cmd
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ed.Logging", "projects\Ed.Logging\Ed.Logging.csproj", "{8E37E1D3-6B49-9043-CBED-63C3690E54F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{935CE8EA-36F6-4DA3-A24A-9AA9F92D94BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{935CE8EA-36F6-4DA3-A24A-9AA9F92D94BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{935CE8EA-36F6-4DA3-A24A-9AA9F92D94BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{935CE8EA-36F6-4DA3-A24A-9AA9F92D94BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E37E1D3-6B49-9043-CBED-63C3690E54F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E37E1D3-6B49-9043-CBED-63C3690E54F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E37E1D3-6B49-9043-CBED-63C3690E54F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E37E1D3-6B49-9043-CBED-63C3690E54F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {93AC1761-8FDB-4FD8-8677-9044C6E46566}
+	EndGlobalSection
+EndGlobal
