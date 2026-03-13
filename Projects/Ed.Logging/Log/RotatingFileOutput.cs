@@ -14,18 +14,18 @@ namespace Ed.Logging.Log
 
         /// <summary> Constructor. Throws only DEFENSIVE exceptions, does nothing more!</summary>
         /// <remarks> File is NOT INITIALIZED here, see <see cref="InitOrSwitchToNextFile" /></remarks>
-        public RotatingFileOutput(string baseDirPathname, string filePrefix, string fileExtention,
+        public RotatingFileOutput(string baseDirPathname, string filePrefix, string fileExtension,
             int maxFileSizeInBytes)
         {
             if (string.IsNullOrEmpty(baseDirPathname) || string.IsNullOrEmpty(filePrefix))
                 throw new ArgumentException("Base directory or file prefix can be neither null nor empty");
 
-            if (string.IsNullOrEmpty(fileExtention) || fileExtention[0] != '.')
+            if (string.IsNullOrEmpty(fileExtension) || fileExtension[0] != '.')
                 throw new ArgumentException("File extension must begin with \".\"");
 
             _baseDirPathname = baseDirPathname;
             _filePrefix = filePrefix;
-            _fileExtention = fileExtention;
+            _fileExtension = fileExtension;
 
             _maxFileSizeInBytes = maxFileSizeInBytes;
 
@@ -76,7 +76,7 @@ namespace Ed.Logging.Log
         private bool _needFlush;
         private StreamWriter _streamWriter;
         private readonly string _baseDirPathname;
-        private readonly string _fileExtention;
+        private readonly string _fileExtension;
         private readonly string _filePrefix;
         private readonly int _maxFileSizeInBytes;
 
@@ -110,15 +110,14 @@ namespace Ed.Logging.Log
             }
         }
 
-        /// <summary>   Deletes the next file older then in days described by maxDayNumber. </summary>
+        /// <summary>   Deletes the next file elder then in days described by maxDayNumber. </summary>
         /// <remarks> Does not read the file date but parses the file name!</remarks>
         public void DeleteNextFileOlderThenInDays(int maxDayNumber)
         {
-            var name = Directory.EnumerateFiles(_baseDirPathname, _filePrefix + "*" + _fileExtention)
+            var name = Directory.EnumerateFiles(_baseDirPathname, _filePrefix + "*" + _fileExtension)
                 .Where(s =>
                 {
                     var fileNameOnly = Path.GetFileNameWithoutExtension(s);
-                    DateTime dateTime;
                     var expectedFileNameLength = _filePrefix.Length + FileNameDateTimeFormat.Length;
                     // our files have long names!
 
@@ -126,7 +125,7 @@ namespace Ed.Logging.Log
                         || fileNameOnly.Length < expectedFileNameLength // then it's NOT OUR file
                         ||
                         !DateTime.TryParseExact(fileNameOnly.Substring(_filePrefix.Length, FileNameDateTemplate.Length),
-                            FileNameDateTemplate, CultureInfo.CurrentCulture, DateTimeStyles.None, out dateTime))
+                            FileNameDateTemplate, CultureInfo.CurrentCulture, DateTimeStyles.None, out var dateTime))
                         return false;
 
                     return DateTime.Now.Subtract(dateTime).TotalDays > maxDayNumber;
@@ -185,8 +184,8 @@ namespace Ed.Logging.Log
         private string InitOrSwitchToNextFile()
         {
             // Get next name
-            var fileNameWithoutExtention = _filePrefix + DateTime.Now.ToString(FileNameDateTimeFormat);
-            var filePathname = Path.Combine(_baseDirPathname, fileNameWithoutExtention + _fileExtention);
+            var fileNameWithoutExtension = _filePrefix + DateTime.Now.ToString(FileNameDateTimeFormat);
+            var filePathname = Path.Combine(_baseDirPathname, fileNameWithoutExtension + _fileExtension);
 
             // If directory exists, it's possible that the file already exists! Then we increment 3d (and/or 2nd) digit after comma
             if (!Directory.Exists(_baseDirPathname))
@@ -222,8 +221,9 @@ namespace Ed.Logging.Log
         private static string QueryAssemblyTitle(Assembly assembly)
         {
             var attributes = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-            var titleAttribute = attributes.FirstOrDefault() as AssemblyTitleAttribute;
-            return null != titleAttribute ? titleAttribute.Title : assembly.GetName().Name;
+            return attributes.FirstOrDefault() is AssemblyTitleAttribute titleAttribute
+                ? titleAttribute.Title
+                : assembly.GetName().Name;
         }
 
         private static Version QueryAssemblyVersion(Assembly assembly)

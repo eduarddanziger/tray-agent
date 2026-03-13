@@ -33,9 +33,6 @@ See output below in target RestoreClientSideLibraries.
     <Resource Include="resources\trayicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.3" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Ed.Logging\Ed.Logging.csproj" />
   </ItemGroup>
   <ItemGroup>

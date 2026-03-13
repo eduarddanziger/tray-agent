@@ -38,7 +38,7 @@ namespace Ed.Logging.Log
         public const int LogCappedQueueBufferCapacity = 300;
 
         /// <summary>
-        ///     Minimum Length of the log line (in order to stabilize the horizontal scroller's benaviour) or
+        ///     Minimum Length of the log line (in order to stabilize the horizontal scroller's behaviour) or
         ///     zero (switch stabilization off)
         /// </summary>
         /// <remarks> Should be configurable</remarks>

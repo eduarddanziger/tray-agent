@@ -14,7 +14,7 @@ namespace Ed.Logging.Log
         /// <summary> Pre-defined error type </summary>
         public const int Error = 2;
 
-        /// <summary>   Forwards line to log targets. You mostly don't need to overrite it</summary>
+        /// <summary>   Forwards line to log targets. You mostly don't need to overwrite it</summary>
         public virtual void PushLine(string line, int infoType)
         {
             OnForwardingLineToLogTargets?.Invoke(line, infoType);
